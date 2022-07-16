@@ -136,3 +136,75 @@ Functions::truncate(
     $length // int length to display
 );
 ```
+
+Base64 encode string for url passing
+```php 
+Functions::base64_url_encode($input);
+```
+Base64 decode encoded url encoded string
+```php 
+Functions::base64_url_decode($encoded_input);
+```
+Mask email address
+```php 
+Functions::maskEmail(
+    $email, // string email address
+    "*" // character to mask with
+);
+```
+
+Mask string by position
+```php 
+Functions::mask(
+    $string, // string to mask
+    "#", // character to mask with
+    $position  //string position to mask left|right|center"
+)
+```
+
+Deletes files and folders
+```php 
+Functions::remove(
+    "path/to/delete/file/", // path to delete files
+    false // delete base file once sub files and folders has been deleted
+) 
+```
+
+Write new log line file
+```php 
+Functions::writeLog(
+    "path/to/logs/", // string path to save logs
+    "info.php",  // string log file name, use .php extension to secure log file from accessible in browser
+    $data, // mixed log content
+    $secure, // bool set true if file is using .php extension security method 
+    $serialize, // bool serialize log content
+    $replace // bool replace old log content
+);
+```
+Save log a short hand replace parameter in `Functions::writeLog`
+```php 
+Functions::saveLog(
+    "path/to/logs/", // string path to save logs
+    "info.php",  // string log file name, use .php extension to secure log file from accessible in browser
+    $data, // mixed log content
+    $secure, // bool set true if file is using .php extension security method 
+    $serialize, // bool serialize log content
+);
+```
+
+Find log file
+```php 
+Functions::findLog(
+    "path/to/logs/info.php", //string filepath to log
+    $unserialize // bool unserialize content if it was saved in serialize mode
+);
+```
+
+Stripes unwanted characters from string and display text in new line in textarea
+```php 
+$func->stripeText(
+    $string, // string text to stripe unwanted characters
+    $rules, // array rules array("[br/]" =>  "&#13;&#10;","<script>"    => "oops!",)
+    $textarea // bool display text inside textarea
+);
+```
