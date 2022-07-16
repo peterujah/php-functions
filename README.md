@@ -16,7 +16,7 @@ $func = new Functions();
 ```
 Or extend the class and create your own new function like below.
 ```php
-class Func extends \Peterujah\NanoBlock\Functions{
+class MyFunction extends \Peterujah\NanoBlock\Functions{
   public function __construct(){
   }
   public function myFunction(){
@@ -26,4 +26,8 @@ class Func extends \Peterujah\NanoBlock\Functions{
     //do anything
   }
 }
+```
+And call initialize your custom class
+```php
+$func = new MyFunction();
 ```
