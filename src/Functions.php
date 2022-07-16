@@ -278,7 +278,7 @@ class Functions{
 	 * Gets ip address
 	 * @return mixed ip address
 	*/
-	public static function ipAddress() {
+	public static function IP() {
 		$ip = 'PROXY';
 		if (isset($_SERVER['HTTP_CLIENT_IP'])){
 	    		$ip = $_SERVER['HTTP_CLIENT_IP'];
