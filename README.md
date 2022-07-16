@@ -1,5 +1,5 @@
 # php-functions
-Wrapped all basic reusable php function which I always on on project.
+Wrapped all basic reusable php function which I always on many of my project.
 This class might also be useful to beginners
 
 
