@@ -1,5 +1,11 @@
-<?php
-namespace NanoBlockTech\Pos;
+<?php 
+/**
+ * OBCompress - Reusable php Functions
+ * @author      Peter Chigozie(NG) peterujah
+ * @copyright   Copyright (c), 2021 Peter(NG) peterujah
+ * @license     MIT public license
+ */
+namespace Peterujah\NanoBlock;
 class Functions{
 	public const INT = "int";
 	public const CHAR = "char";
@@ -11,39 +17,40 @@ class Functions{
 	public const BADGE_SPAN = 2;
 	private const DS = DIRECTORY_SEPARATOR;
 
-    public function __construct(){
-        
-    }
-    /** 
+	/**
+	* Class constructor
+	*/
+	public function __construct(){
+	}
+	/** 
 	 * Create a random value
 	 * @param int $length length
 	 * @param string $type the random value type
 	 * @param bool $upper make value upper case if string
 	 * @return mixed 
 	*/
-    public static function Random($length = 10, $type = self::INT, $upper = false){
+	public static function Random($length = 10, $type = self::INT, $upper = false){
 		if($type==self::UUI){
 			return self::uuid();
 		}
-        $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $int = '0123456789';
+		$char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$int = '0123456789';
 		switch($type) {
 			case self::INT:
-                $hash = $int;
-            break;
+				$hash = $int;
+			break;
 			case self::CHAR: 
-                $hash = $char;
-            break;
+				$hash = $char;
+			break;
 			case self::STR: 
-                $hash = $int.$char;
-            break;
-            case self::SALT: 
-                $hash = $int.$char . '%#*^,?+$`;"{}][|\/:=)(@!.';
-            break;
-            case self::SID: 
-                default: 
-                $hash = $int.$char . '-';
-            break;
+				$hash = $int.$char;
+			break;
+			case self::SALT: 
+				$hash = $int.$char . '%#*^,?+$`;"{}][|\/:=)(@!.';
+			break;
+			case self::SID: default: 
+				$hash = $int.$char . '-';
+			break;
 		}
 		$strLength = strlen($hash);
 		$key = '';
@@ -69,51 +76,51 @@ class Functions{
 		$years      = round($time_elapsed / 31207680 );
 
 		if($seconds <= 60){ 
-            return "just now";
-        }else if($minutes <=60){
-            if($minutes==1){ 
-                return "one minute ago";
-            }else{ 
-                return $minutes." minutes ago";
-            }
-        }else if($hours <=24){
-            if($hours==1){ 
-                return "an hour ago";
-            }else{ 
-                return $hours." hours ago"; 
-            }
-        }else if($days <= 7){
-            if($days==1){ 
-                return "yesterday";
-            }else{ 
-                return $days." days ago";
-            }
-        }else if($weeks <= 4.3){ 
-            if($weeks==1){ 
-                return "a week ago";
-            }else{ 
-                return $weeks." weeks ago";
-            }
-        }else if($months <=12){ 
-            if($months==1){ 
-                return "a month ago";
-            }else{ 
-                return $months." months ago";
-            }
-        }else{ 
-            if($years==1){ 
-                return "one year ago";
-            }else{ 
-                return $years." years ago";
-            }
-        }
-    }
+			return "just now";
+		}else if($minutes <=60){
+			if($minutes==1){ 
+				return "one minute ago";
+			}else{ 
+				return $minutes." minutes ago";
+			}
+		}else if($hours <=24){
+			if($hours==1){ 
+				return "an hour ago";
+			}else{ 
+				return $hours." hours ago"; 
+			}
+		}else if($days <= 7){
+			if($days==1){ 
+				return "yesterday";
+			}else{ 
+				return $days." days ago";
+			}
+		}else if($weeks <= 4.3){ 
+			if($weeks==1){ 
+				return "a week ago";
+			}else{ 
+				return $weeks." weeks ago";
+			}
+		}else if($months <=12){ 
+			if($months==1){ 
+				return "a month ago";
+			}else{ 
+				return $months." months ago";
+			}
+		}else{ 
+			if($years==1){ 
+				return "one year ago";
+			}else{ 
+				return $years." years ago";
+			}
+		}
+	}
 	
 	/** 
-	 * Generates uuid string
-	 * @return string uuid
+	* Generates uuid string
+	* @return string uuid
 	*/
-    public static function uuid() {
+	public static function uuid() {
 		return sprintf(
 			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 			mt_rand( 0, 0xffff ),
@@ -128,9 +135,9 @@ class Functions{
 	}
 
 	/** 
-	 * Checks a valid uuid
-	 * @param string $uuid 
-	 * @return bool true or false
+	* Checks a valid uuid
+	* @param string $uuid 
+	* @return bool true or false
 	*/
 	public static function is_uuid( $uuid ) {
 		if ( ! is_string( $uuid ) ) {
@@ -141,9 +148,9 @@ class Functions{
 	}
 
 	/** 
-	 * Checks if string is a valid email address
-	 * @param string|email $email email address to validate
-	 * @return bool true or false
+	* Checks if string is a valid email address
+	* @param string|email $email email address to validate
+	* @return bool true or false
 	*/
 	public static function is_email($email){
 		if(preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $email) or filter_var($email, FILTER_SANITIZE_EMAIL) !== false){
@@ -155,11 +162,11 @@ class Functions{
 	}
 
 	/** 
-	 * Encrypt password string to create a hash value
-	 * @param string $password password string
-	 * @return int 
+	* Encrypt password string to create a hash value
+	* @param string $password password string
+	* @return int 
 	*/
-    public static function Encrypt($password){
+	public static function Encrypt($password){
 		$options = array(
 			'cost' => 12
 		);
@@ -167,24 +174,24 @@ class Functions{
 	}
 	
 	/** 
-	 * Decrypts a password hash and verify if it match
-	 * @param string $password password string
-	 * @param string $hash password hash
-	 * @return bool true or false
+	* Decrypts a password hash and verify if it match
+	* @param string $password password string
+	* @param string $hash password hash
+	* @return bool true or false
 	*/
 	public static function Decrypt($password, $hash){
 		return (password_verify($password, $hash) ? true : false);
 	}
 
 	/** 
-	 * Calculate items average rating point
-	 * @param int $reviews total number of reviews
-	 * @param float $rating total number of ratings on product
-	 * @param int $index i forgot why i has to use this index
-	 * @param bool $round fixed/round to 2
-	 * @return float average
+	* Calculate items average rating point
+	* @param int $reviews total number of reviews
+	* @param float $rating total number of ratings on product
+	* @param int $index i forgot why i has to use this index
+	* @param bool $round fixed/round to 2
+	* @return float average
 	*/
-    public static function calcAverageRating($reviews=0, $rating=0, $index=1, $round=false){
+	public static function calcAverageRating($reviews=0, $rating=0, $index=1, $round=false){
 		$rating = ($reviews*$rating)/($rating+$index+($reviews*$reviews));
 		return  $round ? round($rating, 2) : $rating;
 	}
@@ -195,8 +202,7 @@ class Functions{
 	 * @param bool $fractional format fraction number
 	 * @return mixed time in ago
 	*/
-    public static function Money($number, $fractional=true) {
-		
+	public static function Money($number, $fractional=true) {
 		if ($fractional) {
 			$number = sprintf('%.2f', $number);
 		}
@@ -212,26 +218,26 @@ class Functions{
 	}
 
 	/** 
-	 * Creates a badge from array
-	 * @param array $tags list of tags [a, b, c] or [key => a, key => b, key => c]
-	 * @param string $color background color of the badge
-	 * @param int $type badge type
-	 * @param string $urlPrefix url to append to link if badge type is self::BADGE_LINK
-	 * @return html|string html span/link elements
+	* Creates a badge from array
+	* @param array $tags list of tags [a, b, c] or [key => a, key => b, key => c]
+	* @param string $color background color of the badge
+	* @param int $type badge type
+	* @param string $urlPrefix url to append to link if badge type is self::BADGE_LINK
+	* @return html|string html span/link elements
 	*/
 	public static function badges($tags, $color="secondary", $type = self::BADGE_SPAN, $urlPrefix = "") {
 		$badge = "";
 		if (!empty($tags)) {
 			$tagArray = explode(',', $tags);
-            foreach($tagArray as $tg){
-                if(!empty($tg)){
+			foreach($tagArray as $tg){
+				if(!empty($tg)){
 					if($type == self::BADGE_LINK){
 						$badge .= "<a class='btn rounded-pill link-tag px-3 py-1 mx-1 my-1 btn-{$color}' href='{$urlPrefix}?tag={$tg}' aria-label='Tag {$tg}'>{$tg}</a>";
 					}else{
-                    	$badge .= "<span class='badge bg-{$color}' aria-label='Tag {$tg}'>{$tg}</span> ";
+						$badge .= "<span class='badge bg-{$color}' aria-label='Tag {$tg}'>{$tg}</span> ";
 					}
-                }
-            }
+				}
+			}
 		}
 		return $badge;
 	}
@@ -251,15 +257,15 @@ class Functions{
 		if (!empty($tags)) {
 			$tagArray = (is_array($tags) ? $tags : explode(',', $tags));
 			$line = 0;
-            foreach($tagArray as $tg){
-                if(!empty($tg)){
-                    $badge .= "<button class='btn rounded-pill text-uppercase px-3 py-1 mx-1 my-1 ".($selected == $tg ? 'btn-success btn-disabled': (empty($selected) && $line==0 ? 'btn-success btn-tag': (empty($selected) ? 'btn-tag btn-' . $color:'btn-' . $color)))."' type='button' data-tag='{$tg}' aria-label='Tag {$tg}'>{$tg}</button>";
+			foreach($tagArray as $tg){
+				if(!empty($tg)){
+					$badge .= "<button class='btn rounded-pill text-uppercase px-3 py-1 mx-1 my-1 ".($selected == $tg ? 'btn-success btn-disabled': (empty($selected) && $line==0 ? 'btn-success btn-tag': (empty($selected) ? 'btn-tag btn-' . $color:'btn-' . $color)))."' type='button' data-tag='{$tg}' aria-label='Tag {$tg}'>{$tg}</button>";
 					$line++;
 					if ($truncate && $line == $limit) { 
 						$badge .= "<span class='more-categories d-none'>";
 					}
-                }
-            }
+				}
+			}
 			if($truncate){
 				$badge .= "</span>";
 				$badge .= "<button class='btn rounded-pill btn-more-tag text-uppercase px-3 py-1 mx-1 my-1 btn-" . $color . "' type='button' data-state='show'>&#8226;&#8226;&#8226;</button>";
@@ -273,9 +279,9 @@ class Functions{
 	 * @return mixed ip address
 	*/
 	public static function ipAddress() {
-        $ip = 'PROXY';
-        if (isset($_SERVER['HTTP_CLIENT_IP'])){
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
+		$ip = 'PROXY';
+		if (isset($_SERVER['HTTP_CLIENT_IP'])){
+	    		$ip = $_SERVER['HTTP_CLIENT_IP'];
 		}else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}else if(isset($_SERVER['HTTP_X_FORWARDED'])){
@@ -283,9 +289,9 @@ class Functions{
 		}else if(isset($_SERVER['HTTP_FORWARDED_FOR'])){
 			$ip = $_SERVER['HTTP_FORWARDED_FOR'];
 		}else if(isset($_SERVER['HTTP_FORWARDED'])){
-            $ip = $_SERVER['HTTP_FORWARDED'];
+	    		$ip = $_SERVER['HTTP_FORWARDED'];
 		}else if(isset($_SERVER['REMOTE_ADDR'])){
-            $ip = $_SERVER['REMOTE_ADDR'];
+	    		$ip = $_SERVER['REMOTE_ADDR'];
 		}
 
 		if(!filter_var($ip, FILTER_VALIDATE_IP)){
@@ -294,8 +300,8 @@ class Functions{
 			$ip = '127.0.0.1';
 		}
 
-        return $ip;
-    }
+		return $ip;
+	}
 
 	/** 
 	 * gets list of hours
@@ -315,7 +321,7 @@ class Functions{
 	 * @param string $string string to format
 	 * @return mixed formatted data
 	*/
-    public static function XSS($string, $type = "name"){
+	public static function XSS($string, $type = "name"){
 		switch ($type){
 			case 'int': $cleanStings = preg_replace("/[^0-9]+/", "", $string); break;
 			case 'key': $cleanStings = preg_replace("/[^a-zA-Z0-9_-]/", "", $string);  break; 
@@ -419,17 +425,17 @@ class Functions{
 	 * @return string base64 encoded string
 	*/
 	public static function base64_url_encode($input) {
-        return strtr(base64_encode($input), '+/=', '._-');
-    }
+		return strtr(base64_encode($input), '+/=', '._-');
+	}
     
 	/** 
 	 * Base64 decode encoded url encoded string
 	 * @param string $input encoded string to decode
 	 * @return string base64 decoded string
 	*/
-    public static function base64_url_decode($input) {
-        return base64_decode(strtr($input, '._-', '+/='));
-    }
+	public static function base64_url_decode($input) {
+		return base64_decode(strtr($input, '._-', '+/='));
+	}
 
 	/** 
 	 * Stripes unwanted characters from string
