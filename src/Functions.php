@@ -557,4 +557,88 @@ class Functions{
 		}
 		return true;
 	}
+	
+	/** 
+	 * Write new log line
+	 * @param string $filepath log filepath 
+	 * @param string $filename log filename
+	 * @param string $data log content
+	 * @param bool $secure secure log content if file type is .php
+	 * @param bool $serialize serialize log content
+	 * @param bool $replace by default it will write new data in a new line if replace is false
+	*/
+	public static function writeLog($filepath, $filename, $data, $secure = true, $serialize = false, $replace = false){
+		if($serialize){
+		    $data = serialize($data);
+		}
+		if($replace && file_exists($filepath . $filename)){
+			unlink($filepath . $filename);
+		}
+
+		if(!$replace && file_exists($filepath . $filename)){
+			$file_handle = fopen($filepath . $filename, "a+");
+			fwrite($file_handle, "\n" . $data);
+			fclose($file_handle);
+		}else{
+			if(!is_dir($filepath)){
+				mkdir($filepath, 0777, true);
+				chmod($filepath, 0755); 
+			}
+			if($secure && pathinfo($filename, PATHINFO_EXTENSION) == "php"){
+				$data = '<?php header("Content-type: text/plain"); die("Access denied");?>' . PHP_EOL . $data;
+			}
+			$fp = fopen($filepath . $filename, 'w');
+			fwrite($fp, $data);
+			fclose($fp);
+		}
+	}
+
+	/** 
+	 * Save log and replace old content
+	 * @param string $filepath log filepath 
+	 * @param string $filename log filename
+	 * @param string $data log content
+	 * @param bool $secure secure log content if file type is .php
+	 * @param bool $serialize serialize log content
+	*/
+	public static function saveLog($filepath, $filename, $data, $secure = true, $serialize = false){
+		self::writeLog($filepath, $filename, $data, $secure, $serialize, false);
+	}
+
+	/** 
+	 * Find log file
+	 * @param string $filepath log filepath 
+	 * @param bool $unserialize unserialize if the log content was serialized
+	 * @return string return lo content
+	*/
+	public static function findLog($filepath, $unserialize = false){
+		$data = null;
+		if(file_exists($filepath)){
+			$file = @file_get_contents($filepath);
+			if (!empty($file)) {
+				$data = self::unlockLog($file);
+				if($unserialize){
+					$data = unserialize($data);
+					if ($data === false) {
+						unlink($filepath);
+					}
+				}
+			}
+		}
+		return $data;
+	}
+
+	/** 
+	 * Remove security on php log file
+	 * @param string $str log content 
+	 * @return string return unsecure lo content
+	*/
+	private static function unlockLog($str) {
+		$position = strpos($str, "\n");
+
+		if ($position === false)
+		    return $str;
+
+		return substr($str, $position + 1);
+	}
 }
