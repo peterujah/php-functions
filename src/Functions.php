@@ -16,6 +16,28 @@ class Functions{
 	public const BADGE_LINK = 1;
 	public const BADGE_SPAN = 2;
 	private const DS = DIRECTORY_SEPARATOR;
+	private $secureRules = array(
+		"[br/]" =>  "&#13;&#10;",
+		"\r\n"      => "\n",
+		"\n\r"      => "\n",
+		"\r"      => "\n",
+		"\n"      => "\n",
+		"<br/>"    => "\n",
+		"<b>"    => "**",
+		"</b>"    => "**",
+		"<img "    => "<data-img",
+		"</img>"    => "</data-img>",
+		"<script>"    => "",
+		"</script>"    => "",
+		"<style>"    => "",
+		"</style>"    => "",
+		"alert("    => "data-alert(",
+		"onclick("    => "data-onclick(",
+		"onload("    => "data-onload(",
+		"javascript:"    => "data-javascript:",
+		"<a "    => "<data-a ",
+		"</a>"    => "</data-a>",
+	);
 
 	/**
 	* Class constructor
@@ -444,8 +466,8 @@ class Functions{
 	 * @param bool $textarea strictly remove all markdown if displaying on webpage else if inside a textarea format with new line
 	 * @return string clean text
 	*/
-	public function secureText($string, $rules = array(), $textarea = true){
-		$dict = (empty($rules) ? $this->secureRules() : $rules);
+	public function stripeText($string, $rules = array(), $textarea = true){
+		$dict = (empty($rules) ? $this->secureRules : $rules);
 		$string = htmlspecialchars_decode($string);
 		$string = str_replace(array_keys($dict), array_values($dict), $string);
 		if(!$textarea){
@@ -460,35 +482,6 @@ class Functions{
 			$string = str_replace("\n", "&#13;&#10;", $string);
 		}
 		return $string;
-	}
-	
-	/** 
-	 * Stripes unwanted characters from string
-	 * @return array list of predefine rules
-	*/
-	public function secureRules(){
-		return array(
-			"[br/]" =>  "&#13;&#10;",
-			"\r\n"      => "\n",
-			"\n\r"      => "\n",
-			"\r"      => "\n",
-			"\n"      => "\n",
-			"<br/>"    => "\n",
-			"<b>"    => "**",
-			"</b>"    => "**",
-			"<img "    => "<data-img",
-			"</img>"    => "</data-img>",
-			"<script>"    => "",
-			"</script>"    => "",
-			"<style>"    => "",
-			"</style>"    => "",
-			"alert("    => "data-alert(",
-			"onclick("    => "data-onclick(",
-			"onload("    => "data-onload(",
-			"javascript:"    => "data-javascript:",
-			"<a "    => "<data-a ",
-			"</a>"    => "</data-a>",
-		);
 	}
 
 	/** 
@@ -557,7 +550,8 @@ class Functions{
 		}
 		return true;
 	}
-	
+
+
 	/** 
 	 * Write new log line
 	 * @param string $filepath log filepath 
@@ -594,12 +588,12 @@ class Functions{
 	}
 
 	/** 
-	 * Save log and replace old content
-	 * @param string $filepath log filepath 
-	 * @param string $filename log filename
-	 * @param string $data log content
-	 * @param bool $secure secure log content if file type is .php
-	 * @param bool $serialize serialize log content
+	* Save log and replace old content
+	* @param string $filepath log filepath 
+	* @param string $filename log filename
+	* @param string $data log content
+	* @param bool $secure secure log content if file type is .php
+	* @param bool $serialize serialize log content
 	*/
 	public static function saveLog($filepath, $filename, $data, $secure = true, $serialize = false){
 		self::writeLog($filepath, $filename, $data, $secure, $serialize, false);
@@ -614,7 +608,7 @@ class Functions{
 	public static function findLog($filepath, $unserialize = false){
 		$data = null;
 		if(file_exists($filepath)){
-			$file = @file_get_contents($filepath);
+		    $file = @file_get_contents($filepath);
 			if (!empty($file)) {
 				$data = self::unlockLog($file);
 				if($unserialize){
@@ -641,4 +635,5 @@ class Functions{
 
 		return substr($str, $position + 1);
 	}
+
 }
