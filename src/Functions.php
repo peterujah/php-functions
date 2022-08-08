@@ -81,6 +81,23 @@ class Functions{
 		}
 		return $upper ? strtoupper($key) : $key;
 	}
+	
+	public static function EAN($country = 615, $length = 13){
+		return self::UPC($country, $length);
+	}
+
+	public static function UPC($prefix = 0, $length = 12){
+		$length -= ( strlen($prefix) + 1 );
+		$code = $prefix . str_pad(self::Random($length), $length, '0');
+		$weightFlag = true;
+		$sum = 0;
+		for ($i = strlen($code) - 1; $i >= 0; $i--) {
+			$sum += (int)$code[$i] * ($weightFlag ? 3 : 1);
+			$weightFlag = !$weightFlag;
+		}
+		$code .= (10 - ($sum % 10)) % 10;
+		return $code;
+	}
 
 	/** 
 	 * Converts php timestamps to social media time format
