@@ -82,10 +82,22 @@ class Functions{
 		return $upper ? strtoupper($key) : $key;
 	}
 	
+	/** 
+	 * Gernerate product EAN13 id
+	 * @param int $country start prefix country code
+	 * @param int $length maximum length
+	 * @return int 
+	*/
 	public static function EAN($country = 615, $length = 13){
 		return self::UPC($country, $length);
 	}
 
+	/** 
+	 * Gernerate product UPC id
+	 * @param int $prefix start prefix number
+	 * @param int $length maximum length
+	 * @return int 
+	*/
 	public static function UPC($prefix = 0, $length = 12){
 		$length -= ( strlen($prefix) + 1 );
 		$code = $prefix . str_pad(self::Random($length), $length, '0');
@@ -97,6 +109,39 @@ class Functions{
 		}
 		$code .= (10 - ($sum % 10)) % 10;
 		return $code;
+	}
+	
+	/** 
+	 * Determine password strength, if it meet all rules
+	 * @param string $password password to check
+	 * @param int $minLength minimum allowed password length
+	 * @param int $maxLength maximum allowed password length
+	 * @param int $complexity maximum complexity pass count
+	 * @return boolean 
+	*/
+	public static function strongPassword($password, $minLength = 8,$maxLength = 16, $complexity=4) {
+	    $passed = 0;
+	    if (strlen($password) < $minLength) {
+		return false;
+	    }
+	    // Does string contain numbers?
+	    if(preg_match("/\d/", $password) > 0) {
+		$passed++;
+	    }
+		// Does string contain big letters?
+	    if(preg_match("/[A-Z]/", $password) > 0) {
+		$passed++;
+	    }
+		// Does string contain small letters?
+	    if(preg_match("/[a-z]/", $password) > 0) {
+		$passed++;
+	    }
+	    // Does string contain special characters?
+	    if(preg_match("/[^a-zA-Z\d]/", $password) > 0) {
+		$passed++;
+	    }
+
+	    return ($passed >= ($complexity > 4 ? 4 :  $ComplexityCount));
 	}
 
 	/** 
