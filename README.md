@@ -68,6 +68,11 @@ Verify a password against hash key
 Functions::Decrypt($password, $hash);
 ```
 
+Check password strength
+```php 
+Functions::strongPassword($password, $minLength = 8,$maxLength = 16, $complexity=4);
+```
+
 Calculate items average rating point
 ```php 
 Functions::calcAverageRating($total_user_reviews, $total_rating_count);
@@ -114,6 +119,16 @@ Functions::XSS("Rhd53883773", "int");
 Formats Convert string characters to HTML entities
 ```php 
 Functions::htmlentities($string, $encode);
+```
+
+Generate UPC product id
+```php 
+Functions::UPC($prefix = 0, $length = 12);
+```
+
+Generate EAN13 id
+```php 
+Functions::EAN($country = 615, $length = 13);
 ```
 
 Copy files and folder to a new directory
