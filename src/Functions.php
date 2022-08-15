@@ -436,6 +436,17 @@ class Functions{
 		//return $enc ? htmlentities($str, ENT_QUOTES, "UTF-8") : htmlentities($str);
 		return htmlentities($str);
 	}
+	
+	public static function removeSubdomain($url){
+		  $host = strtolower(trim($url));
+		  $count = substr_count($host, '.');
+		  if($count === 2){
+		    if(strlen(explode('.', $host)[1]) > 3) $host = explode('.', $host, 2)[1];
+		  } else if($count > 2){
+		    $host = self::removeSubdomain(explode('.', $host, 2)[1]);
+		  }
+		  return $host;
+	}
 
 	/** 
 	 * Copy files and folder to a new directory
