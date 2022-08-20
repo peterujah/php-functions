@@ -310,6 +310,26 @@ class Functions{
 	public static function Fixed($number, $round){
 		return number_format((float)$number, $round, '.', '');
 	}
+	
+	/** 
+	 * Discount from amount
+	 * @param mixed $total amount you want to discount
+	 * @param int $rate discount rate
+	 * @return float discounted amount 
+	*/
+	public static function Discount($total, $rate = 0){
+		return ($total * ((100-$rate) / 100));
+	}
+
+	/** 
+	 * Add Interest to amount
+	 * @param mixed $total amount you want to add extra interest
+	 * @param int $rate interest rate
+	 * @return float increased interest amount 
+	*/
+	public static function Interest($total, $rate = 0){
+		return ($total * ((100+$rate) / 100));
+	}
 
 	/** 
 	* Creates a badge from array
