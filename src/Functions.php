@@ -284,7 +284,7 @@ class Functions{
 	 * Formats currency to add decimal places
 	 * @param mixed $number amount you want to format
 	 * @param bool $fractional format fraction number
-	 * @return mixed time in ago
+	 * @return string formatted money format string
 	*/
 	public static function Money($number, $fractional=true) {
 		if ($fractional) {
@@ -299,6 +299,16 @@ class Functions{
 			}
 		}
 		return $number;
+	}
+
+	/** 
+	 * Fixed/Round a number d
+	 * @param mixed $number amount you want to format
+	 * @param bool $round decimal places
+	 * @return mixed formatted number 
+	*/
+	public static function Fixed($number, $round){
+		return number_format((float)$number, $round, '.', '');
 	}
 
 	/** 
