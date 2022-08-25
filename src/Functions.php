@@ -119,7 +119,7 @@ class Functions{
 	 * @param int $complexity maximum complexity pass count
 	 * @return boolean 
 	*/
-	public static function strongPassword($password, $minLength = 8,$maxLength = 16, $complexity=4) {
+	public static function strongPassword($password, $minLength = 5,$maxLength = 500, $complexity=4) {
 	    $passed = 0;
 	    if (strlen($password) < $minLength) {
 		return false;
