@@ -121,26 +121,31 @@ class Functions{
 	*/
 	public static function strongPassword($password, $minLength = 5,$maxLength = 500, $complexity=4) {
 	    $passed = 0;
-	    if (strlen($password) < $minLength) {
-		return false;
+	    
+	    // Check length
+	    if ($length = strlen($password)) {
+		if ($length < $minLength OR $length > $maxLength) {
+			return false;
+		}
+	    }else{
+	    	return false;
 	    }
-	    // Does string contain numbers?
+	    // Does password contain numbers?
 	    if(preg_match("/\d/", $password) > 0) {
 		$passed++;
 	    }
-		// Does string contain big letters?
+		// Does password contain uppercase letters?
 	    if(preg_match("/[A-Z]/", $password) > 0) {
 		$passed++;
 	    }
-		// Does string contain small letters?
+		// Does password contain lowercase letters?
 	    if(preg_match("/[a-z]/", $password) > 0) {
 		$passed++;
 	    }
-	    // Does string contain special characters?
+	    // Does password contain special characters?
 	    if(preg_match("/[^a-zA-Z\d]/", $password) > 0) {
 		$passed++;
 	    }
-
 	    return ($passed >= ($complexity > 4 ? 4 : $complexity));
 	}
 
