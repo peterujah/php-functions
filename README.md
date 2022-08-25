@@ -177,6 +177,16 @@ Functions::mask(
     $position  //string position to mask left|right|center"
 )
 ```
+Determine password strength, if it meet all basic password rules such as
+1. Does password meet the the minimum and maximum length.
+2. Does password contain numbers?
+3. Does password contain uppercase letters?
+4. Does password contain lowercase letters?
+5. Does password contain special characters?
+
+```
+Functions::strongPassword($password, $minLength, $maxLength);
+```
 
 Deletes files and folders
 ```php 
