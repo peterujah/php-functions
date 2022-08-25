@@ -73,6 +73,11 @@ Check password strength
 Functions::strongPassword($password, $minLength = 8,$maxLength = 16, $complexity=4);
 ```
 
+Extract main domain name from subdomain
+```php
+Functions::removeSubdomain("subdomain.example.com"); //returns example.com
+```
+
 Calculate items average rating point
 ```php 
 Functions::calcAverageRating($total_user_reviews, $total_rating_count);
