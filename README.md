@@ -86,6 +86,22 @@ Format number to money
 ```php 
 Functions::Money($number, $fractional);
 ```
+
+Discount from an (int, float, double) value by percentage
+```php 
+Functions::Discount(100, 10); // return 90
+```
+
+Increase interest of an (int, float, double) value by percentage
+```php 
+Functions::Interest(100, 10); //return 110
+```
+
+Fixed/Round a number to decimal
+```php 
+Functions::Fixed(12345.728836, 2);
+```
+
 Create a tag/badge from array
 ```php 
 Functions::badges(
