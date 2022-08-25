@@ -141,7 +141,7 @@ class Functions{
 		$passed++;
 	    }
 
-	    return ($passed >= ($complexity > 4 ? 4 :  $ComplexityCount));
+	    return ($passed >= ($complexity > 4 ? 4 : $complexity));
 	}
 
 	/** 
@@ -467,8 +467,13 @@ class Functions{
 		return htmlentities($str);
 	}
 	
-	public static function removeSubdomain($url){
-		  $host = strtolower(trim($url));
+	/**
+	* Removes subdomain from main domain name
+	* @param string $hostname the domain you want extract from
+	* @return string main domain name
+	*/
+	public static function removeSubdomain($hostname){
+		  $host = strtolower(trim($hostname));
 		  $count = substr_count($host, '.');
 		  if($count === 2){
 		    if(strlen(explode('.', $host)[1]) > 3) $host = explode('.', $host, 2)[1];
