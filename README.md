@@ -1,6 +1,45 @@
 # php-functions
-Wrapped all basic reusable php function which I always on many of my project.
+
+Wrapped all basic reusable php function which is always useful while working on other project.
 This class might also be useful to beginners
+
+This class provides general-purpose PHP functions to process several functions, it can perform several types of manipulation of string values and other executions.
+
+Currently, it can:
+
+- Create a random value string, int, key, salt or letters of a given length
+- Convert timestamp values into a time format for use on social media sites or forum comments
+- Generate and validate a unique identifier string
+- Generate Unified Public Consultation (UPC)
+- Generate European Article Number (EAN) or (EAN13)
+- Check if a string is a valid email address
+- Encrypt password string to create a hash value
+- Decrypts a password hash and verifies if it matches
+- Calculate a list of item's average rating point
+- Formats a currency value to add decimal places
+- Discount a value by percentage
+- Increase a value by percentage
+- Fixed or Round a number to counts
+- Creates a badge from an array
+- Creates a button badge from an array
+- Gets the current user's IP address
+- Get the list of hours
+- Format the user input to protect again cross site scripting attacks
+- Convert string characters to HTML entities
+- Copy files and folder to a new directory
+- Serve a file for download on the browser
+- Truncate text
+- Base64 encoded string to a parameter in a URL
+- Base64 decode encoded URL encoded string
+- Stripe unwanted characters from a string
+- Extract domain name from subdomain demo.example.com
+- Mask email address
+- Mask string by position
+- Deletes files and folders
+- Write a new log line
+- Save log and replace old content
+- Find the log file
+
 
 
 ## Installation
@@ -97,7 +136,7 @@ Increase interest of an (int, float, double) value by percentage
 Functions::Interest(100, 10); //return 110
 ```
 
-Fixed/Round a number to decimal
+Fixed/Round a number 
 ```php 
 Functions::Fixed(12345.728836, 2);
 ```
