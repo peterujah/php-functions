@@ -13,6 +13,7 @@ Currently, it can:
 - Generate Unified Public Consultation (UPC)
 - Generate European Article Number (EAN) or (EAN13)
 - Check if a string is a valid email address
+- Check a password complexity count, using general secure password pattern
 - Encrypt password string to create a hash value
 - Decrypts a password hash and verifies if it matches
 - Calculate a list of item's average rating point
