@@ -440,23 +440,23 @@ class Functions{
 	 * @param string $string string to format
 	 * @return mixed formatted data
 	*/
-	public static function XSS($string, $type = "name"){
+	public static function XSS($string, $type = "name", $symbol = ""){
 		switch ($type){
-			case 'int': $cleanStings = preg_replace("/[^0-9]+/", "", $string); break;
-			case 'key': $cleanStings = preg_replace("/[^a-zA-Z0-9_-]/", "", $string);  break; 
-			case 'pass': $cleanStings = preg_replace("/[^a-zA-Z0-9-@!*_]/", "", $string);  break; 
-			case 'username': $cleanStings = preg_replace("/[^a-zA-Z0-9-_.]+/", "", $string);  break;
-			case 'email': $cleanStings = preg_replace("/[^a-zA-Z0-9-@.-_]+/", "", $string);  break;
-			case 'url': $cleanStings = preg_replace("/[^a-zA-Z0-9?&-+=.:'\/ ]+/", "", $string);  break;
-			case 'money': $cleanStings = preg_replace("/[^0-9.-]+/", "", $string); break;
-			case 'double': case 'float': $cleanStings = preg_replace("/[^0-9.]+/", "", $string); break;
-			case 'az': $cleanStings = preg_replace("/[^a-zA-Z]+/", "", $string);  break;
-			case 'tel': $cleanStings = preg_replace("/[^0-9-+]+/", "", $string); break;
-			case 'name': $cleanStings = preg_replace("/[^a-zA-Z., ]+/", "", $string);  break;
-			case 'timezone': $cleanStings = preg_replace("/[^a-zA-Z0-9-\/,_:+ ]+/", "", $string);  break;
-			case 'time': $cleanStings = preg_replace("/[^a-zA-Z0-9-: ]+/", "", $string);  break;
-			case 'date': $cleanStings = preg_replace("/[^a-zA-Z0-9-:\/,_ ]+/", "", $string);  break;
-			default: $cleanStings = preg_replace("/[^a-zA-Z0-9-@.,]+/", "", $string);  break;
+			case 'int': $cleanStings = preg_replace("/[^0-9]+/", $symbol, $string); break;
+			case 'key': $cleanStings = preg_replace("/[^a-zA-Z0-9_-]/", $symbol, $string);  break; 
+			case 'pass': $cleanStings = preg_replace("/[^a-zA-Z0-9-@!*_]/", $symbol, $string);  break; 
+			case 'username': $cleanStings = preg_replace("/[^a-zA-Z0-9-_.]+/", $symbol, $string);  break;
+			case 'email': $cleanStings = preg_replace("/[^a-zA-Z0-9-@.-_]+/", $symbol, $string);  break;
+			case 'url': $cleanStings = preg_replace("/[^a-zA-Z0-9?&-+=.:'\/ ]+/", $symbol, $string);  break;
+			case 'money': $cleanStings = preg_replace("/[^0-9.-]+/", $symbol, $string); break;
+			case 'double': case 'float': $cleanStings = preg_replace("/[^0-9.]+/", $symbol, $string); break;
+			case 'az': $cleanStings = preg_replace("/[^a-zA-Z]+/", $symbol, $string);  break;
+			case 'tel': $cleanStings = preg_replace("/[^0-9-+]+/", $symbol, $string); break;
+			case 'name': $cleanStings = preg_replace("/[^a-zA-Z., ]+/", $symbol, $string);  break;
+			case 'timezone': $cleanStings = preg_replace("/[^a-zA-Z0-9-\/,_:+ ]+/", $symbol, $string);  break;
+			case 'time': $cleanStings = preg_replace("/[^a-zA-Z0-9-: ]+/", $symbol, $string);  break;
+			case 'date': $cleanStings = preg_replace("/[^a-zA-Z0-9-:\/,_ ]+/", $symbol, $string);  break;
+			default: $cleanStings = preg_replace("/[^a-zA-Z0-9-@.,]+/", $symbol, $string);  break;
 		}
 		return $cleanStings;
 	}
