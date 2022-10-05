@@ -16,7 +16,7 @@ class Functions{
 	public const BADGE_LINK = 1;
 	public const BADGE_SPAN = 2;
 	private const DS = DIRECTORY_SEPARATOR;
-	private $secureRules = array(
+	private const DEFAULT_RULES = array(
 		"[br/]" =>  "&#13;&#10;",
 		"\r\n"      => "\n",
 		"\n\r"      => "\n",
@@ -119,34 +119,29 @@ class Functions{
 	 * @param int $complexity maximum complexity pass count
 	 * @return boolean 
 	*/
-	public static function strongPassword($password, $minLength = 5,$maxLength = 500, $complexity=4) {
+	public static function strongPassword($password, $minLength = 8,$maxLength = 16, $complexity=4) {
 	    $passed = 0;
-	    
-	    // Check length
-	    if ($length = strlen($password)) {
-		if ($length < $minLength OR $length > $maxLength) {
-			return false;
-		}
-	    }else{
-	    	return false;
+	    if (strlen($password) < $minLength) {
+		return false;
 	    }
-	    // Does password contain numbers?
+	    // Does string contain numbers?
 	    if(preg_match("/\d/", $password) > 0) {
 		$passed++;
 	    }
-		// Does password contain uppercase letters?
+		// Does string contain big letters?
 	    if(preg_match("/[A-Z]/", $password) > 0) {
 		$passed++;
 	    }
-		// Does password contain lowercase letters?
+		// Does string contain small letters?
 	    if(preg_match("/[a-z]/", $password) > 0) {
 		$passed++;
 	    }
-	    // Does password contain special characters?
+	    // Does string contain special characters?
 	    if(preg_match("/[^a-zA-Z\d]/", $password) > 0) {
 		$passed++;
 	    }
-	    return ($passed >= ($complexity > 4 ? 4 : $complexity));
+
+	    return ($passed >= ($complexity > 4 ? 4 :  $ComplexityCount));
 	}
 
 	/** 
@@ -204,6 +199,22 @@ class Functions{
 			}
 		}
 	}
+
+	public static function daysSuffix($day) {
+		$i = (int) $day;
+		$j = $i % 10;
+		$k = $i % 100;
+		if ($j == 1 && $k != 11) {
+			return $i . "st";
+		}
+		if ($j == 2 && $k != 12) {
+			return $i . "nd";
+		}
+		if ($j == 3 && $k != 13) {
+			return $i . "rd";
+		}
+		return $i . "th";
+	}
 	
 	/** 
 	* Generates uuid string
@@ -222,6 +233,7 @@ class Functions{
 			mt_rand( 0, 0xffff )
 		);
 	}
+	
 
 	/** 
 	* Checks a valid uuid
@@ -434,6 +446,17 @@ class Functions{
 		return array_map($formatter, $halfHourSteps);
 	}
 
+	public static function daysInMonth($month, $year, $format="d-M-Y") {
+		$num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+		$dates_month = array();
+		for ($i = 1; $i <= $num; $i++) {
+			$mktime = mktime(0, 0, 0, $month, $i, $year);
+			$date = date($format, $mktime);
+			$dates_month[$date] = $date;
+		}
+		return $dates_month;
+	}
+
 	/** 
 	 * Formats user input to protect again cross site scripting attacks
 	 * @param string $type the expected data type
@@ -472,13 +495,8 @@ class Functions{
 		return htmlentities($str);
 	}
 	
-	/**
-	* Removes subdomain from main domain name
-	* @param string $hostname the domain you want extract from
-	* @return string main domain name
-	*/
-	public static function removeSubdomain($hostname){
-		  $host = strtolower(trim($hostname));
+	public static function removeSubdomain($url){
+		  $host = strtolower(trim($url));
 		  $count = substr_count($host, '.');
 		  if($count === 2){
 		    if(strlen(explode('.', $host)[1]) > 3) $host = explode('.', $host, 2)[1];
@@ -486,6 +504,16 @@ class Functions{
 		    $host = self::removeSubdomain(explode('.', $host, 2)[1]);
 		  }
 		  return $host;
+	}
+
+	public static function removeDomain($url){
+		$subdomain = "";
+		if(strpos($url, ".") !== false && $list = explode(".", $url, 4)) {
+			if(count($list) >= 3){
+				$subdomain = (($list[0] != "www") ? $list[0] :  $list[1]);
+			}
+		}
+		return $subdomain;
 	}
 
 	/** 
@@ -579,8 +607,8 @@ class Functions{
 	 * @param bool $textarea strictly remove all markdown if displaying on webpage else if inside a textarea format with new line
 	 * @return string clean text
 	*/
-	public function stripeText($string, $rules = array(), $textarea = true){
-		$dict = (empty($rules) ? $this->secureRules : $rules);
+	public static function stripeText($string, $rules = array(), $textarea = true){
+		$dict = (empty($rules) ? self::DEFAULT_RULES : $rules);
 		$string = htmlspecialchars_decode($string);
 		$string = str_replace(array_keys($dict), array_values($dict), $string);
 		if(!$textarea){
