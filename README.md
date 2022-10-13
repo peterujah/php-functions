@@ -12,6 +12,7 @@ Currently, it can:
 - Generate and validate a unique identifier string
 - Generate Unified Public Consultation (UPC)
 - Generate European Article Number (EAN) or (EAN13)
+- Genrate Big Integer based on min and max
 - Check if a string is a valid email address
 - Check a password complexity count, using general secure password pattern
 - Encrypt password string to create a hash value
@@ -140,6 +141,11 @@ Functions::Interest(100, 10); //return 110
 Fixed/Round a number 
 ```php 
 Functions::Fixed(12345.728836, 2);
+```
+
+Randome number using min and max
+```php 
+Functions::BigInteger(12345, 728836);
 ```
 
 Create a tag/badge from array
