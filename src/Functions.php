@@ -81,6 +81,18 @@ class Functions{
 		}
 		return $upper ? strtoupper($key) : $key;
 	}
+
+	/** 
+	 * Create a random integer based on minimum and maximum
+	 * @param int $min number
+	 * @param int $max number
+	 * @return int 
+	*/
+	public static function BigInteger($min, $max) {
+		$difference   = bcadd(bcsub($max,$min),1);
+		$rand_percent = bcdiv(mt_rand(), mt_getrandmax(), 8);
+		return bcadd($min, bcmul($difference, $rand_percent, 8), 0);
+	}
 	
 	/** 
 	 * Gernerate product EAN13 id
